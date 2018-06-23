@@ -16,15 +16,15 @@
         
         <ul>
           <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-         <div v-for="(skill1,index1) in listOfSkills" v-bind:key="index1">
-          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-            <li v-for="(skill2,index2) in skill1" v-bind:key="index2">
-              {{index2}}. {{skill2}}
-              <i v-on:click="remove(index1)">remove</i>
-            </li>
+            <div v-for="(skill1,index1) in listOfSkills" v-bind:key="index1">
+              <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+                <li v-for="(skill2,index2) in skill1" v-bind:key="index2">
+                  {{index2}}. {{skill2}}
+                  <i v-on:click="remove(index1)">remove</i>
+                </li>
+              </transition-group>
+            </div>
           </transition-group>
-         </div>
-         </transition-group>
          <button v-on:click="clean_transition()">Clean</button>
         </ul>
 
@@ -41,7 +41,14 @@ export default {
       listOfSkills: [
         ["Vue.js"],
         ["Vue1.js"],
-        ["Vue2.js"],],
+        ["Vue2.js"],
+        ['Java Script'],
+        ['My Sql'],
+        ['Work Press'],
+        ['Atom'],
+        ['Php'],
+        ['JSP'],  
+      ],
     }     
   },
   methods: {
@@ -50,14 +57,28 @@ export default {
       {
         //do nothing
       } else {
-        this.listOfSkills.push([]);
-        this.listOfSkills[this.listOfSkills.length-1].push(this.skill);
+        //this.listOfSkills.push([]);
+        this.listOfSkills[this.listOfSkills.length-1].push([this.skill]);
         this.skill = '';
       }
     },
     remove(ind) {
-      alert('remove was clicked')
+      //alert('remove was clicked')
       this.listOfSkills[ind].splice(0,1);
+    },
+    clean_transition(){
+      this.listOfSkills.sort();
+      var len = this.listOfSkills.length;
+      alert('about to delete');
+      for( var x = 0; x<len; x++){
+        for (var i=0; i<len; i++){
+          if(this.listOfSkills[i]=="") {
+            this.listOfSkills.shift();
+          } else {
+            //do nothing
+          } 
+        }
+      }
     },
   },
 }
