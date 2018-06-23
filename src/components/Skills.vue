@@ -16,7 +16,7 @@
         
         <ul>
          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-           <li v-for="(skill1,index) in listOfSkills" v-bind:key="index">{{index}}. {{skill1}}</li>
+           <li v-for="(skill1,index) in listOfSkills" v-bind:key="index">{{index}}. {{skill1[0]}}</li>
          </transition-group>
         </ul>
 
