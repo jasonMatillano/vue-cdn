@@ -2,7 +2,7 @@
 <template>
     <div>
       <div class="holder">
-        <p>listOfSkills contains {{listOfSkills}}</p>
+        <p>listOfSkills contains {{listOfSkills}} length: {{listOfSkills.length}}</p>
 
         <form @submit.prevent="addSkill()">
           <input type="text" placeholder="Enter your skill here..." v-model="skill">
@@ -15,9 +15,17 @@
         </form>
         
         <ul>
-         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-           <li v-for="(skill1,index) in listOfSkills" v-bind:key="index">{{index}}. {{skill1[0]}}</li>
+          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+         <div v-for="(skill1,index1) in listOfSkills" v-bind:key="index1">
+          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+            <li v-for="(skill2,index2) in skill1" v-bind:key="index2">
+              {{index2}}. {{skill2}}
+              <i v-on:click="remove(index1)">remove</i>
+            </li>
+          </transition-group>
+         </div>
          </transition-group>
+         <button v-on:click="clean_transition()">Clean</button>
         </ul>
 
         <p>These are the skills that you possess.</p>
@@ -42,19 +50,14 @@ export default {
       {
         //do nothing
       } else {
-        this.listOfSkills.push([this.skill] );
+        this.listOfSkills.push([]);
+        this.listOfSkills[this.listOfSkills.length-1].push(this.skill);
         this.skill = '';
       }
     },
-    remove(index_main,index_child) {
-      console.log(index_main + " " + index_child);
-      if (index_main == 1){
-        this.listOfArrays.skills.splice(index_child,1);
-      } else if (index_main == 2) {
-        this.listOfArrays.dummys.splice(index_child,1);
-      } else if (index_main == 3) {
-        this.listOfArrays.yummys.splice(index_child,1);
-      }
+    remove(ind) {
+      alert('remove was clicked')
+      this.listOfSkills[ind].splice(0,1);
     },
   },
 }
