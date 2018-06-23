@@ -2,6 +2,7 @@
 <template>
     <div>
       <div class="holder">
+        <p>listOfSkills contains {{listOfSkills}}</p>
 
         <form @submit.prevent="addSkill()">
           <input type="text" placeholder="Enter your skill here..." v-model="skill">
@@ -15,24 +16,7 @@
         
         <ul>
          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-         <li v-for="(data, index) in listOfArrays.skills" :key='index'>
-           {{index}}. {{data.skill}}
-           <i v-on:click="remove(1,index)">remove</i>
-         </li>
-         </transition-group>
-
-         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOut">   
-         <li v-for="(data1, index1) in listOfArrays.dummys"  v-bind:key='index1'>
-           {{index1}}. {{data1.dummy}}
-           <i v-on:click="remove(2,index1)">remove1</i>
-         </li>
-         </transition-group>
-
-         <transition-group name="list" enter-active-class="animated wobble" leave-active-class="animated bounceOut">   
-         <li v-for="(data2, index2) in listOfArrays.yummys"  :key='index2'>
-           {{index2}}. {{data2.yummy}}
-           <i v-on:click="remove(3,index2)">remove2</i>
-         </li>
+           <li v-for="(skill1,index) in listOfSkills" v-bind:key="index">{{index}}. {{skill1}}</li>
          </transition-group>
         </ul>
 
@@ -46,32 +30,19 @@ export default {
   data() {
     return{
       skill: '',
-      characters: [
-      { name: 'Ryu', age: 21},
-      { name: 'Yoshi', age: 22},
-      { name: 'Ken', age: 23},
-      ],
-      listOfArrays: {
-      skills: [
-        {"skill": "Vue.js"},
-      ],
-      dummys: [
-        {'dummy':'Bye1'},
-      ],
-      yummys:[
-        {'yummy':'Yummmm1'},
-
-      ],
-      },
+      listOfSkills: [
+        ["Vue.js"],
+        ["Vue1.js"],
+        ["Vue2.js"],],
     }     
   },
   methods: {
     addSkill() {
       if(this.skill.length<8)
       {
-        
+        //do nothing
       } else {
-        this.skills.push({skill: this.skill});
+        this.listOfSkills.push([this.skill] );
         this.skill = '';
       }
     },
