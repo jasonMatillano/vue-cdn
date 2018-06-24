@@ -1,35 +1,32 @@
 <!----------------------------------------template------------------------------------------------>
 <template>
-    <div>
-      <div class="holder">
-        <p>listOfSkills contains {{listOfSkills}} length: {{listOfSkills.length}}</p>
-
-        <form @submit.prevent="addSkill()">
-          <input type="text" placeholder="Enter your skill here..." v-model="skill">
-
-          <transition name="alert-in" enter-active-class="animated wobble" leave-active-class="animated bounceOut"> 
-            <p class="alert" v-if="skill.length<8 && skill.length!=0"> 
+<div>
+  <div id="list-complete-demo" class="holder">
+    <p>{{items}}</p>
+    <form @submit.prevent="add">
+      <input type="text" v-model="input1">
+      <transition name="alert-in" enter-active-class="animated wobble" leave-active-class="animated bounceOut"> 
+            <p class="alert" v-if="input1.length<8 && input1.length!=0"> 
               Input should have a minimum of 8 characters 
             </p>
           </transition>
-        </form>
-        
-        <ul>
-          <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-            <div v-for="(skill1,index1) in listOfSkills" v-bind:key="index1">
-              <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-                <li v-for="(skill2,index2) in skill1" v-bind:key="index2">
-                  {{index2}}. {{skill2}}
-                  <i v-on:click="remove(index1)">remove</i>
-                </li>
-              </transition-group>
-            </div>
-          </transition-group>
-         <button v-on:click="clean_transition()">Clean</button>
-        </ul>
+    </form>
 
-        <p>These are the skills that you possess.</p>
-      </div>
+    <ul>
+    <transition-group name="list-complete" enter-active-class="animated bounceInDown" leave-active-class="animated bounceOut" >
+      <li
+        v-for="(item, index) in items"
+        v-bind:key="item"
+        class="list-complete-item"
+      >
+        {{ item }}
+        <i v-on:click="remove(index)">remove</i>
+      </li>
+    </transition-group>
+    </ul>
+
+    <p>These are the skills that you possess.</p>
+  </div>
     </div>
 </template>
 <!----------------------------------------script------------------------------------------------>
@@ -37,56 +34,56 @@
 export default {
   data() {
     return{
-      skill: '',
-      listOfSkills: [
-        ["Vue.js"],
-        ["Vue1.js"],
-        ["Vue2.js"],
-        ['Java Script'],
-        ['My Sql'],
-        ['Work Press'],
-        ['Atom'],
-        ['Php'],
-        ['JSP'],  
+      input1: '',
+      items: [
+        'Java',
+        'My Sql',
+        'JS',
+        'HTML',
+        'CSS',
+        'PHP',
+        'XAMP',
+        'Vue',
       ],
     }     
   },
-  methods: {
-    addSkill() {
-      if(this.skill.length<8)
-      {
-        //do nothing
-      } else {
-        //this.listOfSkills.push([]);
-        this.listOfSkills[this.listOfSkills.length-1].push([this.skill]);
-        this.skill = '';
-      }
+    methods: {
+
+    add: function () {
+      this.items.splice(0, 0, this.input1);
+      this.input1 = '';
     },
-    remove(ind) {
-      //alert('remove was clicked')
-      this.listOfSkills[ind].splice(0,1);
+
+    remove: function (ind) {
+      this.items.splice(ind, 1);
+    },
+
+    shuffle: function () {
+      this.items = _.shuffle(this.items);
     },
   },
-   updateds(){
-        this.listOfSkills.sort();
-        var len = this.listOfSkills.length;
-        //alert('about to delete');
-        for( var x = 0; x<len; x++){
-          for (var i=0; i<len; i++){
-            if(this.listOfSkills[i]=="") {  
-              this.listOfSkills.shift();
-            } else {
-              //do nothing
-            } 
-          }
-        }
-      },
 }
 </script>
 <!----------------------------------------Style------------------------------------------------>
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
-@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"; 
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+.list-complete-item {
+  transition: all 1s;
+  display: block;
+  margin-right: 10px;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
+/*---------------added-----------------*/
+
   .holder {
     background: #fff;
   }
@@ -95,8 +92,8 @@ export default {
     padding: 0;
     list-style-type: none;
   }
-  
-  ul li {
+
+  ul li   {
     padding: 20px;
     font-size: 1.3em;
     background-color: #E0EDF4;
@@ -152,4 +149,5 @@ i {
   font-size:1em;
   color:rgb(255, 0, 21);
 }
+
 </style>
