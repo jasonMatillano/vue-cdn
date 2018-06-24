@@ -66,21 +66,21 @@ export default {
       //alert('remove was clicked')
       this.listOfSkills[ind].splice(0,1);
     },
-    clean_transition(){
-      this.listOfSkills.sort();
-      var len = this.listOfSkills.length;
-      alert('about to delete');
-      for( var x = 0; x<len; x++){
-        for (var i=0; i<len; i++){
-          if(this.listOfSkills[i]=="") {
-            this.listOfSkills.shift();
-          } else {
-            //do nothing
-          } 
-        }
-      }
-    },
   },
+   updateds(){
+        this.listOfSkills.sort();
+        var len = this.listOfSkills.length;
+        //alert('about to delete');
+        for( var x = 0; x<len; x++){
+          for (var i=0; i<len; i++){
+            if(this.listOfSkills[i]=="") {  
+              this.listOfSkills.shift();
+            } else {
+              //do nothing
+            } 
+          }
+        }
+      },
 }
 </script>
 <!----------------------------------------Style------------------------------------------------>
